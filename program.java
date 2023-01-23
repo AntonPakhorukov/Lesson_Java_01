@@ -1,4 +1,9 @@
-//import java.util.Scanner;
+import java.util.List;
+import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileReader;
+import java.io.BufferedReader;
 public class program {
     static void sayHi(){
         System.out.println("Hi");
@@ -10,7 +15,7 @@ public class program {
         if (n == 1) return 1;
             return n * factor(n-1);
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /*
         System.out.println("Bye world"); // Bye world
         String s = "";
@@ -216,10 +221,151 @@ public class program {
         System.err.println(sum(5, 8));
         System.out.println(factor(5));
         */
+        // Управляющие конструкции===================================================================================
+        /*
+        // Оператор ветвления "if"
+        int a = 3;
+        int b = 2;
+        int c;
+        if (a > b){
+        c = a;
+        } else {
+        c = b;
+        }
+        System.out.println(c);
+        if (a > b) c = a;
+        if (b > a) c = b;
+        System.out.println(c);
+        c = a > b ? a : b; //Если верно, то вернется все что от знака "?" до ":", в обратном случае то, что после ":"
+        System.out.println(c);
+        // Оператор выбора "Switch"
+        Scanner scan = new Scanner(System.in);
+        System.out.printf("Введите месяц: ");
+        boolean flag = scan.hasNextInt();
+        System.out.printf("В строке ввода %s\n", flag);
+        int mounth = scan.nextInt();
+        String text = "";
+        switch (mounth) {
+            case 1:
+                text = "Autumn";
+                break;
+            case 2:
+                text = "February";
+                break;
+            case 3: // если default нет, то при вводе 3 или 4 или 5 будет выводится "345"
+            case 4:
+            case 5:
+                text = "345";
+            default: // если есть dfefault, то при вводе 3 ил 4 или 5 будет выводится ошибка
+                text = "mistake";
+                break;
+        }
+        scan.close();
+        System.out.println(text);
+        // ЦИКЛЫ
+        // WHILE
+        int value = 321;
+        int count = 0;
+        while (value != 0) {
+            value /= 10;
+            count++;
+        }
+        System.out.println(count);
+        // do While
+        int value1 = 321;
+        int count1 = 0;
+        do {
+            value1 /= 10;
+            count1++;
+        } while (value1 != 0);
+        System.out.println(count1);
+        // Continue, Break
+        for(int i = 0; i < 10; i++){
+            if (i % 2 == 0)
+                continue; // Перейдет на следующую итерацию
+            System.out.println(i); //1,3,5,7,9
+        }
+        for (int j = 0 ; j < 10; j++) {
+            if (j == 7) 
+                break; // Прервет выполнение на данной итерации
+            System.out.println(j); // 0,1,2,3,4,5,6
+        }
+        // FOR
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.printf("*" + " ");
+            }
+            System.out.println();
+        }
+        //FOR EACH (FOR IN)
+        int array[] = new int[5];
+        for(int item : array) {
+            System.out.printf("%d ", item);
+        }
+        System.out.println();
+        //int[] arr[] = new int[3][5];
+        int[] arr[] = new int[][] {{1,2,3}, {1,2,3}, {1,2,3}};
+        for(int[] item : arr) {
+            for(int line : item) {
+                System.out.printf("%d ", line);
+            } System.out.println();
+        } 
+        //=========ВАЖНАЯ ОСОБЕННОСТЬ=============
+        int[] arr = new int[10];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = 3;
+        }
+        for (int j = 0; j < arr.length; j++) {
+            System.out.printf("%d ", arr[j]); // 3 3 3 3 3 3 3 3 3 3 - присвоит значения "3"
+        } System.out.println();
+        for (int item : arr) {
+            item = 5;
+            System.out.printf("%d ", item); // 5 5 5 5 5 5 5 5 5 5 - будет только в рамках этого цикла
+        }
+        System.out.println();
+        for (int k = 0; k < arr.length; k++) {
+            System.out.printf("%d ", arr[k]); // 3 3 3 3 3 3 3 3 3 3 - останется "3"
+        }
+        */
+        // РАБОТА С ФАЙЛОМИ==========================================================================================
+        // ЗАПИСЬ
+        /*
+        try (FileWriter fw = new FileWriter("file.txt", false)){ // Если файла нет, то он создастся
+            fw.write("Line 1"); // Запишет на первую строку
+            fw.append('\n'); // перейдет на вторую строку
+            fw.append('2'); // напишет 2 на второй строке
+            fw.append('\n'); // перейдет на новую строку
+            fw.append("Line 3"); // напишет на третьей строке
+            fw.write("new"); // слитно допишет в 3-ю строку
+            fw.append("AndNew"); // так же прилипнет в третьей строке
+            fw.flush(); // записывает то, что уже передал с помощью метода write
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        //ЧТЕНИЕ
+        FileReader fr = new FileReader("file.txt");
+        int c;
+        while((c = fr.read()) != -1) {
+            char ch = (char)c;
+            /*if (ch == '\n') {
+                System.out.println(ch);
+            } else {
+                System.out.printf("%s", ch);
+            }
+            System.out.printf("%s", ch);
+        }
+        System.out.println();
+        BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+        String str;
+        while((str = br.readLine()) != null){
+            System.out.printf("== %s ==\n", str);
+        }
+        br.close();
 
 
      }
     static String getType(Object a) {
         return a.getClass().getSimpleName();
+        */
     }
 }
