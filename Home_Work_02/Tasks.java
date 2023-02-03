@@ -17,6 +17,7 @@ public class Tasks {
         XMLFormatter xml = new XMLFormatter();
         fh.setFormatter(xml);
         log.log(Level.WARNING, "Log level WARNING");
+        fh.close();
     }
     static void task_01() {
         /*
@@ -47,8 +48,6 @@ public class Tasks {
                 }
             }
         }       
-        // System.out.println(list);
-        // System.out.println();
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).equals("фамилия")) {
