@@ -1,7 +1,32 @@
 package Seminar_05;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Example {
     public static void main(String[] args) {
+        // ex0();
+
+        // System.out.println(ex1("foo", "bar"));
+        // System.out.println(ex1("paper", "title"));
+
+        // System.out.println(ex2("a+(d*3)"));
+        // System.out.println(ex2("[a+(1*3)"));
+        // System.out.println(ex2("[6+(3*3)]"));
+        // System.out.println(ex2("{a}[+]{(d*3)}"));
+        // System.out.println(ex2("<{a}+{(d*3)}>"));
+        // System.out.println(ex2("{a+]}{(d*3)}"));
+
+        System.out.println(ex3("Мороз и солнце день чудесный " + 
+        "Еще ты дремлешь друг прелестный " +
+        "Пора красавица проснись."));
+    }
+
+    static void ex0(){
         /*
         Создать структуру для хранения Номеров паспортов и Фамилий сотрудников организации.
         123456 Иванов
@@ -11,7 +36,24 @@ public class Example {
         654321 Петрова
         345678 Иванов
         Вывести данные по сотрудникам с фамилией Иванов.
+         */
+        Map<Integer, String> map = new HashMap<>();
+        map.put(123456, "Иванов");
+        map.put(321456, "Васильев");
+        map.put(234561, "Петрова");
+        map.put(234432, "Иванов");
+        map.put(654321, "Петрова");
+        map.put(345678, "Иванов");
 
+        for (Map.Entry entry: map.entrySet()){ // Entry - это сущность, пара/ключ в Map
+            if (entry.getValue().equals("Иванов")){
+                System.out.println(entry);
+            }
+        }
+    }
+
+    static boolean ex1(String s1, String s2){
+        /*
         Даны 2 строки, написать метод, который вернет true, если эти строки являются изоморфными
         и false, если нет. Строки изоморфны, если одну букву в первом слове можно заменить
         на некоторую букву во втором слове, при этом повторяющиеся буквы одного слова меняются на 
@@ -24,7 +66,27 @@ public class Example {
         Пример 2:
         Input: s = "paper", t = "title"
         Output: true
+         */
+        if (s1.length() != s2.length()){
+            return false;
+        }
+        Map<Character, Character> map = new HashMap<>();
+        char[] c1 = s1.toCharArray();
+        char[] c2 = s2.toCharArray();
+        for (int i = 0; i < c1.length; i++) {
+            if (map.containsKey(c1[i])){
+                if (c2[i] != map.get(c1[i])){
+                    return false;
+                }
+            } else {
+                map.put(c1[i], c2[i]);
+            }
+        }
+        return true;
+    }
 
+    static boolean ex2(String s){
+        /*
         Написать программу, определяющую правильность расстановки скобок в выражении.
         Пример 1: a+(d*3) - истина
         Пример 2: [a+(1*3) - ложь
@@ -32,7 +94,28 @@ public class Example {
         Пример 4: {a}[+]{(d*3)} - истина
         Пример 5: <{a}+{(d*3)}> - истина
         Пример 6: {a+]}{(d*3)} - ложь
+        */
+        Stack<Character> stack = new Stack<>();
+        Map<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put(']', '[');
+        map.put('>', '<');
+        map.put('}', '{');
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsValue(s.charAt(i))){
+                stack.push(s.charAt(i));
+            }
+            if (map.containsKey(s.charAt(i))){
+                if (stack.isEmpty() || stack.pop() != map.get(s.charAt(i))){
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
 
+    static TreeMap<Integer, List<String>> ex3(String s){
+        /*
         Взять набор строк, например,
 
         Мороз и солнце день чудесный
@@ -42,5 +125,24 @@ public class Example {
         Написать метод, который отсортирует эти строки по длине слова с помощью TreeMap. 
         Строки с одинаковой длиной не должны “потеряться”.
          */
+        s = s.replace(".", "");
+        String[] words = s.split(" ");
+        TreeMap<Integer, List<String>> treeMap = new TreeMap<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return Integer.compare(o2, o1);
+            }
+        });
+        for (String word: words){
+            if (treeMap.containsKey(word.length())){
+                List<String> list = treeMap.get(word.length());
+                list.add(word);
+            } else {
+                List<String> list = new ArrayList<>();
+                list.add(word);
+                treeMap.put(word.length(), list);
+            }
+        }
+        return treeMap;
     }
 }

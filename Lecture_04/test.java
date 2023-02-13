@@ -2,6 +2,7 @@ package Lecture_04;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class test {
@@ -37,6 +38,27 @@ public class test {
         
         
         //garbage collector
+
+        Queue<Integer> queue = new LinkedList<>(); 
+        for (int i = 0; i < 5; i++) {
+            queue.add(i);
+        }
+        System.out.println(queue); // [0, 1, 2, 3, 4]
+        queue.remove(2);
+        System.out.println(queue); // [0, 1, 3, 4]
+        queue.remove();
+        System.out.println(queue); // [1, 3, 4]
+        int item = queue.remove();
+        System.out.println(item); // 1
+        System.out.println();
+        LinkedList<Integer> li = new LinkedList<>();
+        for (int i = 0; i < 5; i++) {
+            li.add(i);
+        }
+        System.out.println(li); // [0, 1, 2, 3, 4]
+        li.remove();
+        System.out.println(li); // [1, 2, 3, 4]
+        
 
 
     }

@@ -1,4 +1,4 @@
-package Home_work_03;
+package Home_Work_03;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class Tasks {
     public static void main(String[] args) {
-        // task_01();
+        task_01();
         // task_02();
-        task_03();
+        // task_03();
 
     }   
     static void task_01() {

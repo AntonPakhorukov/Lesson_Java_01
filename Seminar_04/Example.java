@@ -13,9 +13,9 @@ public class Example {
 
     public static void main(String[] args) {
         // ex_01();
-        // ex_02();
+        ex_02();
         // ex_04();
-        ex_05();
+        // ex_05();
     }
     static void ex_01() {
         // 1) Замерьте время, за которое в ArrayList добавятся 10000 элементов.
